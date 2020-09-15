@@ -4,7 +4,8 @@ require "cc/engine/content_resolver"
 
 module CC::Engine
   describe ContentResolver do
-    cops = RuboCop::Cop::Cop.all
+    cops = RuboCop::Cop::Registry.global.without_department(:Test).without_department(:Metrics).cops
+
     # The more docs the better -- feel free to unwhitelist cops and add readups
     whitelist = File.read("./spec/support/currently_undocumented_cops.txt").lines.map(&:chomp)
 

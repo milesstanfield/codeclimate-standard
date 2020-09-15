@@ -32,19 +32,11 @@ module CC::Engine
         expect(attributes["location"]["positions"]["end"]["line"]).to eq(10)
         expect(attributes["location"]["positions"]["begin"]["column"]).to eq(4)
         expect(attributes["location"]["positions"]["end"]["column"]).to eq(100)
-        expect(attributes["content"]).to be_nil
-      end
-
-      context "with documentation" do
-        let(:offense) { super().tap { |offense| offense.cop_name = "Style/Alias" } }
-
-        it "includes the documentation in the returned json" do
-          issue = Issue.new(offense, "app/models/user.rb")
-          attributes = JSON.parse(issue.to_json)
-          expect(attributes["content"]["body"].squish).to include(
-            "This cop enforces the use of either `#alias` or `#alias_method` depending on configuration."
-          )
-        end
+        expect(attributes["content"]["body"]).to eq(<<~TXT.chomp)
+          If there are no parentheses around the arguments, then braces
+          and do-end have different meaning due to how they bind, so we
+          allow either.
+        TXT
       end
     end
 

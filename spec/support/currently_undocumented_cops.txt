@@ -1,6 +1,5 @@
 RuboCop::Cop::Lint::MissingCopEnableDirective
 RuboCop::Cop::Lint::Syntax
 RuboCop::Cop::Migration::DepartmentName
-RuboCop::Cop::Standard::SemanticBlocks
 RuboCop::Cop::Style::ConditionalAssignment
 RuboCop::Cop::Style::DoubleCopDisableDirective

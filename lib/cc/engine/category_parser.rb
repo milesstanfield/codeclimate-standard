@@ -16,6 +16,7 @@ module CC
         "Lint" => "Style",
         "Lint/Eval" => "Security",
         "Metrics" => "Complexity",
+        "Migrations/RemoveIndex" => "Performance",
         "Performance" => "Bug Risk",
         "Rails" => "Bug Risk",
         "Rails/ActionFilter" => "Style",
@@ -24,8 +25,6 @@ module CC
         "Rails/TimeZone" => "Style",
         "Rails/Validation" => "Style",
         "Standard/SemanticBlocks" => "Style",
-        "Style" => "Style",
-        "Migrations/RemoveIndex" => "Performance"
       }.freeze
 
       attr_reader :cop_name
