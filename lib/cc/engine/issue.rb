@@ -14,7 +14,6 @@ module CC
         @path = path
       end
 
-      # rubocop:disable Metrics/MethodLength
       def to_json(*_)
         hash = {
           type: "Issue",
@@ -29,13 +28,8 @@ module CC
         }
         hash[:content] = {body: content_body} if content_body.present?
 
-        if (fingerprint = Fingerprint.new(path, cop_name, message).compute)
-          hash[:fingerprint] = fingerprint
-        end
-
         hash.to_json
       end
-      # rubocop:enable Metrics/MethodLength
 
       def check_name
         "Rubocop/#{cop_name}"

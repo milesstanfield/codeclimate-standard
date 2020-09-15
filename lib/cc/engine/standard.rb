@@ -8,7 +8,6 @@ require "cc/engine/source_file"
 require "cc/engine/category_parser"
 require "cc/engine/file_list_resolver"
 require "cc/engine/issue"
-require "cc/engine/fingerprint" # TODO: delete? what's fingerprint?
 require "active_support"
 require "active_support/core_ext"
 

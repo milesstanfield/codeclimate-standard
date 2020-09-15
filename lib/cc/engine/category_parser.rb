@@ -16,7 +16,6 @@ module CC
         "Lint" => "Style",
         "Lint/Eval" => "Security",
         "Metrics" => "Complexity",
-        "Metrics/LineLength" => "Style",
         "Performance" => "Bug Risk",
         "Rails" => "Bug Risk",
         "Rails/ActionFilter" => "Style",
@@ -24,6 +23,7 @@ module CC
         "Rails/HasAndBelongsToMany" => "Style",
         "Rails/TimeZone" => "Style",
         "Rails/Validation" => "Style",
+        "Standard/SemanticBlocks" => "Style",
         "Style" => "Style",
         "Migrations/RemoveIndex" => "Performance"
       }.freeze
