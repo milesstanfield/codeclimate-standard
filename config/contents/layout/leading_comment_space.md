@@ -11,3 +11,35 @@ or rackup options.
 
     # good
     # Some comment
+
+### Example: AllowDoxygenCommentStyle: false (default)
+
+    # bad
+
+    #**
+    # Some comment
+    # Another line of comment
+    #*
+
+### Example: AllowDoxygenCommentStyle: true
+
+    # good
+
+    #**
+    # Some comment
+    # Another line of comment
+    #*
+
+### Example: AllowGemfileRubyComment: false (default)
+
+    # bad
+
+    #ruby=2.7.0
+    #ruby-gemset=myproject
+
+### Example: AllowGemfileRubyComment: true
+
+    # good
+
+    #ruby=2.7.0
+    #ruby-gemset=myproject

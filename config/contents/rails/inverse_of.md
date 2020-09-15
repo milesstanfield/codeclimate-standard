@@ -76,7 +76,7 @@ for associations to work in both ways, or set to `false` to opt-out.
 
 ### Example:
     # bad
-    # However, RuboCop can not detect this pattern...
+    # However, Standard can not detect this pattern...
     class Physician < ApplicationRecord
       has_many :appointments
       has_many :patients, through: :appointments

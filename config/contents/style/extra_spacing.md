@@ -3,12 +3,12 @@ This cop checks for extra/unnecessary whitespace.
 ### Example:
 
     # good if AllowForAlignment is true
-    name      = "RuboCop"
+    name      = "Standard"
     # Some comment and an empty line
 
-    website  += "/bbatsov/rubocop" unless cond
-    puts        "rubocop"          if     debug
+    website  += "/bbatsov/standard" unless cond
+    puts        "standard"          if     debug
 
     # bad for any configuration
-    set_app("RuboCop")
+    set_app("Standard")
     website  = "https://github.com/bbatsov/rubocop"
