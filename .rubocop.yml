@@ -1,15 +1,20 @@
 inherit_from: base_rubocop.yml
 
-require: rubocop-rspec
+AllCops:
+  NewCops: disable
+  TargetRubyVersion: 2.7.1
 
 Style/FileName:
   Exclude:
-    - 'bin/codeclimate-rubocop'
+    - 'bin/codeclimate-standard'
 
 Style/StringLiterals:
   Enabled: false
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
   Enabled: false
 
 Style/TrailingCommaInArguments:

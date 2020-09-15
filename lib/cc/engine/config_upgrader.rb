@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "mry"
 require "rubocop/config_loader"
 

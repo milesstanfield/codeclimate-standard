@@ -2,7 +2,7 @@
 set -eu
 
 if [ $# -eq 0 ]; then
-  >&2 echo "Usage: 'bin/newver X.Y.Z', where X.Y.Z is the Rubocop version to add."
+  >&2 echo "Usage: 'bin/newver X.Y.Z', where X.Y.Z is the Standard version to add."
   exit 1
 fi
 NEWVER="$1"
@@ -11,7 +11,7 @@ previous_channel() {
   cat <<EOM | ruby
     version = "${NEWVER}".match(/(\d+).(\d+).(\d+)/)
     minor = version[2].to_i - 1
-    puts "channel/rubocop-#{version[1]}-#{minor}"
+    puts "channel/standard-#{version[1]}-#{minor}"
 EOM
 }
 
@@ -21,13 +21,13 @@ git checkout $(previous_channel)
 git checkout -b "newver/${NEWVER}"
 
 ed Gemfile <<-EDITS
-/gem "rubocop",/c
-gem "rubocop", "${NEWVER}", require: false
+/gem "standard",/c
+gem "standard", "${NEWVER}", require: false
 .
 wq
 EDITS
 
-make bundle -e BUNDLE_ARGS="update rubocop rubocop-rspec rubocop-migrations"
+make bundle -e BUNDLE_ARGS="update standard"
 make image
 make docs
 sudo chown -R $(id -u):$(id -g) config
@@ -42,4 +42,4 @@ fi
 set -e
 
 git add config spec Gemfile*
-git commit -v -m "Updated channel and documentation to Rubocop v${NEWVER}"
+git commit -v -m "Updated channel and documentation to Standard v${NEWVER}"

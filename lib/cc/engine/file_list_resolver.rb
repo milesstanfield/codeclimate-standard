@@ -1,22 +1,20 @@
-# frozen_string_literal: true
-
 module CC
   module Engine
     class FileListResolver
-      def initialize(root:, engine_config: {}, config_store:)
+      def initialize(root:, config_store:, engine_config: {})
         @root = root
         @include_paths = engine_config["include_paths"] || ["./"]
         @config_store = config_store
       end
 
       def expanded_list
-        absolute_include_paths.flat_map do |path|
+        absolute_include_paths.flat_map { |path|
           if Dir.exist?(path)
             rubocop_runner.send(:find_target_files, [path])
           elsif rubocop_file_to_include?(path)
             path
           end
-        end.compact
+        }.compact
       end
 
       private
@@ -25,11 +23,9 @@ module CC
 
       def absolute_include_paths
         @include_paths.map do |path|
-          begin
-            Pathname.new(path).realpath.to_s
-          rescue Errno::ENOENT
-            nil
-          end
+          Pathname.new(path).realpath.to_s
+        rescue Errno::ENOENT
+          nil
         end.compact
       end
 

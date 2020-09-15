@@ -1,8 +1,7 @@
-# frozen_string_literal: true
+require "rubocop/config_obsoletion"
+require "rubocop/config_validator"
 
-require "rubocop/config"
-
-module RuboCopConfigRescue
+module RuboCopConfigObsoletionRescue
   def reject_obsolete_cops_and_parameters
     super
   rescue RuboCop::ValidationError => e
@@ -10,4 +9,14 @@ module RuboCopConfigRescue
   end
 end
 
-RuboCop::Config.prepend RuboCopConfigRescue
+RuboCop::ConfigObsoletion.prepend RuboCopConfigObsoletionRescue
+
+module RuboCopConfigValidatorRescue
+  def alert_about_unrecognized_cops(invalid_cop_names)
+    super
+  rescue RuboCop::ValidationError => e
+    warn e.message
+  end
+end
+
+RuboCop::ConfigValidator.prepend RuboCopConfigValidatorRescue

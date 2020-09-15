@@ -1,39 +1,54 @@
-# frozen_string_literal: true
-
-require "rubocop"
+require "standard"
 require "fileutils"
 
 namespace :docs do
   desc "Scrapes documentation from the rubocop gem"
   task :scrape do
     MIN_LINES = 3
-    COP_FOLDERS = %w[bundler gemspec layout lint metrics naming performance rails security style].freeze
+    COP_FOLDERS = %w[bundler gemspec layout lint metrics migration naming performance rails security style].freeze
 
-    `git clone https://github.com/rubocop-hq/rubocop rubocop-git`
-    `cd rubocop-git && git checkout tags/v#{RuboCop::Version.version}`
+    files = []
 
-    files = Dir.glob("./rubocop-git/lib/rubocop/cop/{#{COP_FOLDERS.join(",")}}/**.rb")
+    # dir = "rubocop-git"
+    # `rm -rf #{dir}`
+    # `git clone https://github.com/rubocop-hq/rubocop #{dir}`
+    # FileUtils.cd(dir) do
+    #   `git checkout tags/v#{RuboCop::Version.version}`
+    # end
+    #
+    # files += Dir.glob("./#{dir}/lib/rubocop/cop/{#{COP_FOLDERS.join(",")}}/**.rb")
+    # `rm -rf #{dir}`
 
-    documentation_files = files.each_with_object({}) do |file, hash|
+    dir = "standard-git"
+    `rm -rf #{dir}`
+    `git clone https://github.com/testdouble/standard #{dir}`
+    FileUtils.cd(dir) do
+      `git checkout tags/v#{Standard::VERSION.version}`
+    end
+
+    files += Dir.glob("./#{dir}/lib/standard/cop/**.rb")
+    # `rm -rf #{dir}`
+
+    documentation_files = files.each_with_object({}) { |file, hash|
       content = File.read(file)
       content = content.gsub(/.*\n\s+(?=module RuboCop)/, "")
 
       class_doc = content.match(/(\s+#.*)+/).to_s
       doc_lines = class_doc.
-                  gsub(/^\n/, "").
-                  gsub("@example", "### Example:").
-                  gsub("@good", "# good").
-                  gsub("@bad", "# bad").
-                  split("\n").
-                  map { |line| line.gsub(/\A\s+#\s?/, "") }.
-                  map { |line| line.gsub(/\A\s{2}/, " " * 4) }.
-                  join("\n")
+        gsub(/^\n/, "").
+        gsub("@example", "### Example:").
+        gsub("@good", "# good").
+        gsub("@bad", "# bad").
+        split("\n").
+        map { |line| line.gsub(/\A\s+#\s?/, "") }.
+        map { |line| line.gsub(/\A\s{2}/, " " * 4) }.
+        join("\n")
       hash[file] = doc_lines
-    end
+    }
 
     documentation_files.each do |file_path, documentation|
-      namespace = file_path.split('/').slice(-2, 1).join('/')
-      file_name = File.basename(file_path, '.rb')
+      namespace = file_path.split("/").slice(-2, 1).join("/")
+      file_name = File.basename(file_path, ".rb")
 
       folder_path = "./config/contents/#{namespace}"
       write_path = "#{folder_path}/#{file_name}.md"
@@ -48,7 +63,5 @@ namespace :docs do
         FileUtils.rm(write_path) if File.exist?(write_path)
       end
     end
-
-    `rm -rf rubocop-git`
   end
 end

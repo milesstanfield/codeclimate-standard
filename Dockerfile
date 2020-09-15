@@ -1,4 +1,6 @@
-FROM ruby:2.4-alpine
+FROM ruby:2.7.1-alpine
+
+LABEL maintainer="Jacob Frautschi <jacob.frautschi@gmail.com>"
 
 WORKDIR /usr/src/app
 
@@ -21,4 +23,4 @@ USER app
 VOLUME /code
 WORKDIR /code
 
-CMD ["/usr/src/app/bin/codeclimate-rubocop"]
+CMD ["/usr/src/app/bin/codeclimate-standard"]

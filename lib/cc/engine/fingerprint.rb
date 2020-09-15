@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "digest/md5"
 
 module CC
@@ -15,8 +13,8 @@ module CC
         Metrics/PerceivedComplexity
       ].freeze
 
-      URL_REGEX = / \(https?\:.+\)/
-      LINES_REGEX = / \[.+\]$/
+      URL_REGEX = / \(https?:.+\)/.freeze
+      LINES_REGEX = / \[.+\]$/.freeze
 
       def initialize(path, cop_name, message)
         @path = path

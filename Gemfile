@@ -1,15 +1,11 @@
-# frozen_string_literal: true
-
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 gem "activesupport", require: false
 gem "mry", "~> 0.52.0", require: false
-gem "parser", "~> 2.4.0"
+gem "parser", "~> 2.7.1"
 gem "pry", require: false
-gem "rubocop", "~> 0.52.1", require: false
-gem "rubocop-migrations", require: false
-gem "rubocop-rspec", require: false
 gem "safe_yaml"
+gem "standard", "~> 0.6.0", require: false
 
 group :test do
   gem "rake"

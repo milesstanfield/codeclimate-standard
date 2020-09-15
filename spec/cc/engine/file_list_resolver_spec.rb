@@ -44,7 +44,13 @@ module CC::Engine
         create_source_file("Gemfile", "source 'https://rubygems.org'")
         create_source_file("src/b.rb", "def a; true; end")
         create_source_file("src/c.rb", "def a; true; end")
-        create_source_file(".rubocop.yml", "AllCops:\n  Exclude:\n    - src/c.rb\n    - Gemfile\n")
+        create_source_file(".rubocop.yml", <<~YML)
+          AllCops:
+            NewCops: enable
+            Exclude:
+              - src/c.rb
+              - Gemfile
+        YML
 
         resolver = FileListResolver.new(root: @code, engine_config: { "include_paths" => %w[Gemfile src/] }, config_store: rubocop_config)
         expect(resolver.expanded_list).to eq [Pathname.new("src/b.rb").realpath.to_s]

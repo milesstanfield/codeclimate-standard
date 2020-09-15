@@ -1,11 +1,8 @@
-# frozen_string_literal: true
-
 Rake.add_rakelib "lib/tasks"
 
-begin
+if `gem list -i "^rake$"`.chomp == "true"
   require "rspec/core/rake_task"
 
   RSpec::Core::RakeTask.new(:spec)
   task default: :spec
-rescue LoadError
 end

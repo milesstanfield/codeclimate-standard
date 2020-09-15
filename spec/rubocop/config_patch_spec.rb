@@ -1,11 +1,8 @@
-# frozen_string_literal: true
-
 require "spec_helper"
 
 module CC::Engine
   describe "Rubocop config patch" do
-
-    it "prevents config from raisong on obsolete cops" do
+    it "prevents config from raising on obsolete cops" do
       config = RuboCop::Config.new(
         {
           "Style/TrailingComma" => {
@@ -15,9 +12,9 @@ module CC::Engine
         ".rubocop.yml"
       )
 
-      expect do # Suppress output
+      expect { # Suppress output
         expect { config.validate }.to_not raise_error
-      end.to output(//).to_stderr
+      }.to output(//).to_stderr
     end
 
     it "warns about obsolete cops" do
@@ -30,9 +27,11 @@ module CC::Engine
         ".rubocop.yml"
       )
 
-      expect { config.validate }.to output(
-        %r{Warning: unrecognized cop Style/TrailingComma found in .rubocop.yml}
-      ).to_stderr
+      expect { config.validate }.to output(<<~TXT).to_stderr
+        The `Style/TrailingComma` cop has been removed. Please use `Style/TrailingCommaInArguments`, `Style/TrailingCommaInArrayLiteral`, and/or `Style/TrailingCommaInHashLiteral` instead.
+        (obsolete configuration found in .rubocop.yml, please update it)
+        unrecognized cop Style/TrailingComma found in .rubocop.yml
+      TXT
     end
   end
 end

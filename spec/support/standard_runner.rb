@@ -1,7 +1,7 @@
-require "cc/engine/rubocop"
+require "cc/engine/standard"
 require "tmpdir"
 
-module RubocopRunner
+module StandardRunner
   def self.included(example_group)
     example_group.include FilesystemHelpers
     example_group.around do |example|
@@ -22,8 +22,8 @@ module RubocopRunner
 
   def run_engine(config = nil)
     io = StringIO.new
-    rubocop = CC::Engine::Rubocop.new(@code, config, io)
-    rubocop.run
+    standard = CC::Engine::Standard.new(@code, config, io)
+    standard.run
 
     @engine_output = io.string
   end

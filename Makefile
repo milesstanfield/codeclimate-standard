@@ -1,6 +1,6 @@
 .PHONY: image test docs bundle
 
-IMAGE_NAME ?= codeclimate/codeclimate-rubocop
+IMAGE_NAME ?= codeclimate/codeclimate-standard
 
 image:
 	docker build --rm -t $(IMAGE_NAME) .

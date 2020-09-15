@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CC
   module Engine
     class SourceFile
@@ -11,7 +9,7 @@ module CC
       end
 
       def inspect
-        rubocop_team.inspect_file(processed_source).each do |offense|
+        rubocop_team.investigate(processed_source).offenses.each do |offense|
           next if offense.disabled?
 
           io.print Issue.new(offense, display_path).to_json
@@ -32,7 +30,14 @@ module CC
       end
 
       def rubocop_team
-        RuboCop::Cop::Team.new(RuboCop::Cop::Cop.registry, config_store, display_cop_names: false)
+        config = ::Standard::BuildsConfig.new.call([])
+
+        cop_classes = RuboCop::Cop::Registry.all
+        registry = RuboCop::Cop::Registry.new(cop_classes, config.rubocop_options)
+
+        config_store = config.rubocop_config_store.for_file(path)
+
+        RuboCop::Cop::Team.new(registry, config_store, display_cop_names: false)
       end
 
       def display_path

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "safe_yaml"
 require "cc/engine/content_resolver"
 
@@ -8,7 +6,7 @@ SafeYAML::OPTIONS[:default_mode] = :safe
 module CC
   module Engine
     class Issue < SimpleDelegator
-      MULTIPLIER_REGEX = %r{\[([\d\.]+)\/([\d\.]+)\]}
+      MULTIPLIER_REGEX = %r{\[([\d.]+)/([\d.]+)\]}.freeze
       DEFAULT_REMEDIATION_POINTS = 50_000
       DEFAULT_BASE_POINTS = 200_000
       DEFAULT_OVERAGE_POINTS = 50_000
@@ -21,7 +19,7 @@ module CC
       end
 
       # rubocop:disable Metrics/MethodLength
-      def to_json
+      def to_json(*_)
         hash = {
           type: "Issue",
           check_name: check_name,
@@ -30,10 +28,10 @@ module CC
           remediation_points: remediation_points,
           location: {
             path: path,
-            positions: positions,
-          },
+            positions: positions
+          }
         }
-        hash[:content] = { body: content_body } if content_body.present?
+        hash[:content] = {body: content_body } if content_body.present?
 
         if (fingerprint = Fingerprint.new(path, cop_name, message).compute)
           hash[:fingerprint] = fingerprint
@@ -41,6 +39,7 @@ module CC
 
         hash.to_json
       end
+      # rubocop:enable Metrics/MethodLength
 
       def check_name
         "Rubocop/#{cop_name}"
@@ -79,8 +78,8 @@ module CC
       end
 
       def overage_points
-        overage_points = cop_definition.
-                         fetch("overage_points", DEFAULT_OVERAGE_POINTS)
+        overage_points = cop_definition
+          .fetch("overage_points", DEFAULT_OVERAGE_POINTS)
 
         overage_points * multiplier
       end
@@ -99,11 +98,11 @@ module CC
         {
           begin: {
             column: columns.first,
-            line: lines.first,
+            line: lines.first
           },
           end: {
             column: columns.last,
-            line: lines.last,
+            line: lines.last
           }
         }
       end

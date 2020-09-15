@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CC
   module Engine
     class CategoryParser
@@ -27,7 +25,7 @@ module CC
         "Rails/TimeZone" => "Style",
         "Rails/Validation" => "Style",
         "Style" => "Style",
-        "Migrations/RemoveIndex" => "Performance",
+        "Migrations/RemoveIndex" => "Performance"
       }.freeze
 
       attr_reader :cop_name

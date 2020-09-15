@@ -60,7 +60,7 @@ module CC::Engine
           it "returns the configured remediation points" do
             cop_list = {
               "Metrics/BlockNesting" => {
-                "remediation_points" => 300_000,
+                "remediation_points" => 300_000
               }
             }
             offense = OpenStruct.new
@@ -77,7 +77,7 @@ module CC::Engine
             cop_list = {
               "Metrics/AbcSize" => {
                 "base_points" => 5_000_000,
-                "overage_points" => 100_000,
+                "overage_points" => 100_000
               }
             }
             offense = OpenStruct.new
