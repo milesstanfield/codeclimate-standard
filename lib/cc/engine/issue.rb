@@ -6,16 +6,12 @@ SafeYAML::OPTIONS[:default_mode] = :safe
 module CC
   module Engine
     class Issue < SimpleDelegator
-      MULTIPLIER_REGEX = %r{\[([\d.]+)/([\d.]+)\]}.freeze
       DEFAULT_REMEDIATION_POINTS = 50_000
       DEFAULT_BASE_POINTS = 200_000
-      DEFAULT_OVERAGE_POINTS = 50_000
 
-      def initialize(issue, path, cop_list: nil)
-        @path = path
-        @cop_list = cop_list
-
+      def initialize(issue, path)
         super(issue)
+        @path = path
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -46,48 +42,15 @@ module CC
       end
 
       def remediation_points
-        if multiplier?
-          base_points + overage_points
-        else
-          cop_definition.fetch("remediation_points", DEFAULT_REMEDIATION_POINTS)
-        end
+        DEFAULT_REMEDIATION_POINTS
       end
 
       private
 
       attr_reader :path
 
-      def multiplier?
-        message.match(MULTIPLIER_REGEX)
-      end
-
-      def base_points
-        cop_definition.fetch("base_points", DEFAULT_BASE_POINTS)
-      end
-
-      def cop_definition
-        @cop_definition ||= cop_list.fetch(cop_name, {})
-      end
-
-      def cop_list
-        @cop_list ||= YAML.load_file(expand_config_path("cops.yml"))
-      end
-
       def expand_config_path(path)
         File.expand_path("../../../../config/#{path}", __FILE__)
-      end
-
-      def overage_points
-        overage_points = cop_definition
-          .fetch("overage_points", DEFAULT_OVERAGE_POINTS)
-
-        overage_points * multiplier
-      end
-
-      def multiplier
-        result = message.scan(MULTIPLIER_REGEX)
-        score, threshold = result[0]
-        score.to_i - threshold.to_i
       end
 
       def category

@@ -1,13 +1,6 @@
-RuboCop::Cop::Layout::SpaceInsideBrackets
-RuboCop::Cop::Layout::Tab
-RuboCop::Cop::Layout::TrailingBlankLines
 RuboCop::Cop::Lint::MissingCopEnableDirective
 RuboCop::Cop::Lint::Syntax
-RuboCop::Cop::Metrics::LineLength
 RuboCop::Cop::Migration::DepartmentName
-RuboCop::Cop::Performance::FixedSize
-RuboCop::Cop::Rails::Validation
 RuboCop::Cop::Standard::SemanticBlocks
 RuboCop::Cop::Style::ConditionalAssignment
 RuboCop::Cop::Style::DoubleCopDisableDirective
-RuboCop::Cop::Style::UnneededPercentQ
