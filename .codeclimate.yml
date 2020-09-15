@@ -1,8 +1,6 @@
 engines:
   standard:
     enabled: true
-ratings:
-  paths:
-  - "**.rb"
+    channel: latest
 exclude_paths:
 - spec/

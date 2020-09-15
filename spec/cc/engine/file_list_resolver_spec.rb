@@ -23,6 +23,7 @@ module CC::Engine
       Dir.chdir(@code) do
         create_source_file("a.rb", "def a; true; end")
         create_source_file("bin/some_script", "#!/usr/bin/env ruby")
+        create_source_file("bin/some_other_script", "#!/usr/bin/env sh")
 
         resolver = FileListResolver.new(root: @code, engine_config: {}, config_store: rubocop_config)
         expect(resolver.expanded_list).to eq %w[a.rb bin/some_script].map { |fn| Pathname.new(fn).realpath.to_s }
