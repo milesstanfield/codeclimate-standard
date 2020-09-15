@@ -2,11 +2,11 @@
 
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate-standard/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate-standard)
 
-`codeclimate-standard` is a Code Climate engine that wraps the [Standard](https://github.com/rubocop-hq/rubocop) static analysis tool. You can run it on your command line using the Code Climate CLI, or on our hosted analysis platform.
+`codeclimate-standard` is a Code Climate engine that wraps the [Standard](https://github.com/testdouble/standard) static analysis tool. You can run it on your command line using the Code Climate CLI, or on our hosted analysis platform.
 
-RuboCop helps you enforce many of the guidelines outlined in the community [Ruby Style Guide](https://github.com/rubocop-hq/ruby-style-guide). Most aspects of its behavior can be tweaked via various [configuration options](https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml), which are set in a **.rubocop.yml** file.
+[Standard](https://github.com/testdouble/standard) is an opinionated wrapper around [RuboCop](https://github.com/rubocop-hq/rubocop) with no configuration necessary.
 
-You can find some basic setup instructions and links to the Standard OSS project below. For additional Code Climate-specific config details, check out our [Standard engine documentation][cc-docs-standard].
+You can find some basic setup instructions and links to the Standard OSS project below.
 
 ### Installation
 
