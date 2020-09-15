@@ -32,9 +32,19 @@ module CC::Engine
         expect(attributes["location"]["positions"]["end"]["line"]).to eq(10)
         expect(attributes["location"]["positions"]["begin"]["column"]).to eq(4)
         expect(attributes["location"]["positions"]["end"]["column"]).to eq(100)
-        expect(attributes["content"]["body"].squish).to include(
-          "This cop checks that the cyclomatic complexity of methods is not higher than the configured maximum."
-        )
+        expect(attributes["content"]).to be_nil
+      end
+
+      context "with documentation" do
+        let(:offense) { super().tap { |offense| offense.cop_name = "Style/Alias" } }
+
+        it "includes the documentation in the returned json" do
+          issue = Issue.new(offense, "app/models/user.rb")
+          attributes = JSON.parse(issue.to_json)
+          expect(attributes["content"]["body"].squish).to include(
+            "This cop enforces the use of either `#alias` or `#alias_method` depending on configuration."
+          )
+        end
       end
     end
 
