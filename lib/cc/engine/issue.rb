@@ -31,7 +31,7 @@ module CC
             positions: positions
           }
         }
-        hash[:content] = {body: content_body } if content_body.present?
+        hash[:content] = {body: content_body} if content_body.present?
 
         if (fingerprint = Fingerprint.new(path, cop_name, message).compute)
           hash[:fingerprint] = fingerprint

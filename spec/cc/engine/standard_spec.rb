@@ -68,7 +68,7 @@ module CC::Engine
               location: OpenStruct.new(
                 line: 1,
                 column: 0,
-                source_line: "",
+                source_line: ""
               ),
               cop_name: "fake",
               message: "message"
@@ -90,8 +90,8 @@ module CC::Engine
         location = {
           "path" => "my_script.rb",
           "positions" => {
-            "begin" => { "column" => 1, "line" => 1 },
-            "end" => { "column" => 1, "line" => 1 }
+            "begin" => {"column" => 1, "line" => 1},
+            "end" => {"column" => 1, "line" => 1}
           }
         }
 

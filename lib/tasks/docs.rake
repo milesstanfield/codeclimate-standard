@@ -34,15 +34,15 @@ namespace :docs do
       content = content.gsub(/.*\n\s+(?=module RuboCop)/, "")
 
       class_doc = content.match(/(\s+#.*)+/).to_s
-      doc_lines = class_doc.
-        gsub(/^\n/, "").
-        gsub("@example", "### Example:").
-        gsub("@good", "# good").
-        gsub("@bad", "# bad").
-        split("\n").
-        map { |line| line.gsub(/\A\s+#\s?/, "") }.
-        map { |line| line.gsub(/\A\s{2}/, " " * 4) }.
-        join("\n")
+      doc_lines = class_doc
+        .gsub(/^\n/, "")
+        .gsub("@example", "### Example:")
+        .gsub("@good", "# good")
+        .gsub("@bad", "# bad")
+        .split("\n")
+        .map { |line| line.gsub(/\A\s+#\s?/, "") }
+        .map { |line| line.gsub(/\A\s{2}/, " " * 4) }
+        .join("\n")
       hash[file] = doc_lines
     }
 

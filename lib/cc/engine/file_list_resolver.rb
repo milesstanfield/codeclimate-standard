@@ -22,11 +22,13 @@ module CC
       attr_reader :config_store
 
       def absolute_include_paths
-        @include_paths.map do |path|
-          Pathname.new(path).realpath.to_s
-        rescue Errno::ENOENT
-          nil
-        end.compact
+        @include_paths.map { |path| to_absolute_path(path) }.compact
+      end
+
+      def to_absolute_path(path)
+        Pathname.new(path).realpath.to_s
+      rescue Errno::ENOENT
+        nil
       end
 
       def rubocop_file_to_include?(file)
