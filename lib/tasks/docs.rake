@@ -31,7 +31,7 @@ namespace :docs do
 
   def collect_standard_files
     `git clone https://github.com/testdouble/standard`
-    FileUtils.cd('standard') do
+    FileUtils.cd("standard") do
       `git checkout tags/v#{Standard::VERSION.version}`
     end
     Dir.glob("./standard/lib/standard/cop/**.rb")
@@ -39,7 +39,7 @@ namespace :docs do
 
   def collect_rubocop_files
     `git clone https://github.com/rubocop-hq/rubocop`
-    FileUtils.cd('rubocop') do
+    FileUtils.cd("rubocop") do
       `git checkout tags/v#{RuboCop::Version.version}`
     end
     Dir.glob("./rubocop/lib/rubocop/cop/{#{COP_FOLDERS.join(",")}}/**.rb")
@@ -47,7 +47,7 @@ namespace :docs do
 
   def collect_rubocop_performance_files
     `git clone https://github.com/rubocop-hq/rubocop-performance`
-    FileUtils.cd('rubocop-performance') do
+    FileUtils.cd("rubocop-performance") do
       `git checkout tags/v#{RuboCop::Performance::Version::STRING}`
     end
     Dir.glob("./rubocop-performance/lib/rubocop/cop/performance/**.rb")

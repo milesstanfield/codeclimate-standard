@@ -24,7 +24,7 @@ module CC
         "Rails/HasAndBelongsToMany" => "Style",
         "Rails/TimeZone" => "Style",
         "Rails/Validation" => "Style",
-        "Standard/SemanticBlocks" => "Style",
+        "Standard/SemanticBlocks" => "Style"
       }.freeze
 
       attr_reader :cop_name
