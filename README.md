@@ -1,6 +1,6 @@
 # Code Climate Standard Engine
 
-[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate-standard/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate-standard)
+[![Code Climate](https://codeclimate.com/github/jakeonfire/codeclimate-standard/badges/gpa.svg)](https://codeclimate.com/github/jakeonfire/codeclimate-standard)
 
 `codeclimate-standard` is a Code Climate engine that wraps the [Standard](https://github.com/testdouble/standard) static analysis tool. You can run it on your command line using the Code Climate CLI, or on our hosted analysis platform.
 
