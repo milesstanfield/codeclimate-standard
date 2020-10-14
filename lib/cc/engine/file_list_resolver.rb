@@ -15,8 +15,10 @@ module CC
 
       private
 
+      attr_reader :builds_config, :include_paths
+
       def absolute_include_paths
-        @include_paths.map { |path| to_absolute_path(path) }.compact
+        include_paths.map { |path| to_absolute_path(path) }.compact
       end
 
       def to_absolute_path(path)
@@ -31,7 +33,7 @@ module CC
       end
 
       def target_finder
-        @target_finder ||= RuboCop::TargetFinder.new(@builds_config.rubocop_config_store)
+        @_target_finder ||= RuboCop::TargetFinder.new(builds_config.rubocop_config_store)
       end
     end
   end

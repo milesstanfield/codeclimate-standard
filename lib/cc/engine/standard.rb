@@ -38,7 +38,7 @@ module CC
       attr_reader :root, :engine_config, :io
 
       def files_to_inspect
-        @files_to_inspect ||= FileListResolver.new(
+        @_files_to_inspect ||= FileListResolver.new(
           builds_config: builds_config,
           engine_config: engine_config,
           root: root
@@ -46,7 +46,7 @@ module CC
       end
 
       def builds_config
-        @builds_config ||= ::Standard::BuildsConfig.new.call([])
+        @_builds_config ||= ::Standard::BuildsConfig.new.call([])
       end
     end
   end
