@@ -4,7 +4,7 @@ LABEL maintainer="Jacob Frautschi <jacob.frautschi@gmail.com>"
 
 WORKDIR /usr/src/app
 
-RUN adduser -u 9000 -D app
+RUN adduser -u 9000 -g 9000 -D app
 
 COPY Gemfile Gemfile.lock /usr/src/app/
 

@@ -1,11 +1,11 @@
 {
-  "name": "Standard",
+  "name": "codeclimate-standard",
   "description": "Standard is an opinionated wrapper around RuboCop with no configuration necessary.",
   "maintainer": {
     "name": "Jacob Frautschi",
     "email": "jacob.frautschi@gmail.com"
   },
   "languages" : ["Ruby"],
-  "version": "0.6.0a",
+  "version": "0.6.0b",
   "spec_version": "0.3.1"
 }

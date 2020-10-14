@@ -1,8 +1,8 @@
 module CC
   module Engine
     class SourceFile
-      def initialize(config_store:, io:, path:, root:)
-        @config_store = config_store
+      def initialize(builds_config:, io:, path:, root:)
+        @builds_config = builds_config
         @io = io
         @path = path
         @root = root
@@ -19,10 +19,14 @@ module CC
 
       private
 
-      attr_reader :config_store, :io, :path, :root
+      attr_reader :builds_config, :io, :path, :root
 
       def processed_source
         RuboCop::ProcessedSource.from_file(path, target_ruby_version)
+      end
+
+      def config_store
+        builds_config.rubocop_config_store.for_file(path)
       end
 
       def target_ruby_version
@@ -30,12 +34,8 @@ module CC
       end
 
       def rubocop_team
-        config = ::Standard::BuildsConfig.new.call([])
-
         cop_classes = RuboCop::Cop::Registry.all
-        registry = RuboCop::Cop::Registry.new(cop_classes, config.rubocop_options)
-
-        config_store = config.rubocop_config_store.for_file(path)
+        registry = RuboCop::Cop::Registry.new(cop_classes, builds_config.rubocop_options)
 
         RuboCop::Cop::Team.new(registry, config_store, display_cop_names: false)
       end

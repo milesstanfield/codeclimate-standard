@@ -1,25 +1,19 @@
 module CC
   module Engine
     class FileListResolver
-      def initialize(root:, config_store:, engine_config: {})
+      def initialize(root:, builds_config:, engine_config: {})
         @root = root
         @include_paths = engine_config["include_paths"] || ["./"]
-        @config_store = config_store
+        @builds_config = builds_config
       end
 
       def expanded_list
         absolute_include_paths.flat_map { |path|
-          if Dir.exist?(path)
-            rubocop_runner.send(:find_target_files, [path])
-          elsif rubocop_file_to_include?(path)
-            path
-          end
+          find_target_files(path)
         }.compact
       end
 
       private
-
-      attr_reader :config_store
 
       def absolute_include_paths
         @include_paths.map { |path| to_absolute_path(path) }.compact
@@ -31,17 +25,13 @@ module CC
         nil
       end
 
-      def rubocop_file_to_include?(file)
-        root, basename = File.split(file)
-        store = config_store.for(root)
-
-        return false if store.file_to_exclude?(basename)
-
-        file =~ /\.rb$/ || store.file_to_include?(basename)
+      def find_target_files(path)
+        target_files = target_finder.find([path], :all_file_types)
+        target_files.each(&:freeze).freeze
       end
 
-      def rubocop_runner
-        @rubocop_runner ||= RuboCop::Runner.new({}, @config_store)
+      def target_finder
+        @target_finder ||= RuboCop::TargetFinder.new(@builds_config.rubocop_config_store)
       end
     end
   end

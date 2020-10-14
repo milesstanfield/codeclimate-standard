@@ -24,7 +24,7 @@ module CC
         Dir.chdir(root) do
           files_to_inspect.each do |path|
             SourceFile.new(
-              config_store: config_store.for(path),
+              builds_config: builds_config,
               io: io,
               path: path,
               root: root
@@ -39,14 +39,14 @@ module CC
 
       def files_to_inspect
         @files_to_inspect ||= FileListResolver.new(
-          config_store: config_store,
+          builds_config: builds_config,
           engine_config: engine_config,
           root: root
         ).expanded_list
       end
 
-      def config_store
-        @config_store ||= RuboCop::ConfigStore.new
+      def builds_config
+        @builds_config ||= ::Standard::BuildsConfig.new.call([])
       end
     end
   end
