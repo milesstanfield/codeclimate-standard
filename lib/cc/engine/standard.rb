@@ -46,7 +46,18 @@ module CC
       end
 
       def builds_config
-        @_builds_config ||= ::Standard::BuildsConfig.new.call([])
+        @_builds_config ||= begin
+          override_default_ruby_version
+          ::Standard::BuildsConfig.new.call([])
+        end
+      end
+
+      def override_default_ruby_version
+        ruby_version = ".ruby-version"
+        if File.exist?(ruby_version)
+          project_ruby_version = `cat #{ruby_version}`
+          ::Standard::LoadsYamlConfig.const_set(:RUBY_VERSION, project_ruby_version)
+        end
       end
     end
   end
