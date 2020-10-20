@@ -76,5 +76,14 @@ module CC::Engine
         expect(resolver.expanded_list).to eq [Pathname.new("src/b.rb").realpath.to_s]
       end
     end
+
+    it "handles non-ruby files from include paths" do
+      Dir.chdir(@code) do
+        create_source_file("not_ruby.txt", "some text")
+
+        resolver = FileListResolver.new(root: @code, engine_config: {"include_paths" => %w[not_ruby.txt]}, builds_config: builds_config)
+        expect(resolver.expanded_list).to be_empty
+      end
+    end
   end
 end

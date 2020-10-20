@@ -33,7 +33,7 @@ module CC
       end
 
       def target_finder
-        @_target_finder ||= RuboCop::TargetFinder.new(builds_config.rubocop_config_store)
+        @_target_finder ||= RuboCop::TargetFinder.new(builds_config.rubocop_config_store, force_exclusion: true)
       end
     end
   end
