@@ -6,15 +6,17 @@ module CC::Engine
   describe Standard do
     include StandardRunner
 
+    let(:bad_contents) { <<~RUBY }
+      def method
+        unused = "x"
+
+        return false
+      end
+    RUBY
+
     describe "#run" do
       it "analyzes ruby files using rubocop" do
-        create_source_file("foo.rb", <<-RUBY)
-          def method
-            unused = "x"
-
-            return false
-          end
-        RUBY
+        create_source_file("foo.rb", bad_contents)
 
         run_engine
 
@@ -22,13 +24,7 @@ module CC::Engine
       end
 
       it "respects the default .standard.yml file" do
-        create_source_file("foo.rb", <<~RUBY)
-          def method
-            unused = "x" and "y"
-
-            return false
-          end
-        RUBY
+        create_source_file("foo.rb", bad_contents)
 
         create_source_file(
           ".standard.yml",
@@ -41,7 +37,7 @@ module CC::Engine
 
         run_engine
 
-        expect(issues).to include_check "Style/AndOr"
+        expect(issues).to include_check "Style/RedundantReturn"
         expect(issues).to_not include_check "Lint/UselessAssignment"
       end
 
@@ -49,11 +45,7 @@ module CC::Engine
         create_source_file("my_script", <<~RUBY)
           #!/usr/bin/env ruby
 
-          def method
-            unused = "x"
-
-            return false
-          end
+          #{bad_contents}
         RUBY
 
         run_engine
@@ -75,15 +67,7 @@ module CC::Engine
             )
           ]
         )
-        create_source_file("my_script.rb", <<~RUBY)
-          #!/usr/bin/env ruby
-
-          def method
-            unused = "x"
-
-            return false
-          end
-        RUBY
+        create_source_file("my_script.rb", bad_contents)
 
         run_engine
 
@@ -106,27 +90,15 @@ module CC::Engine
         RUBY
         create_source_file("included_root_file.rb", okay_contents)
         create_source_file("subdir/subdir_file.rb", okay_contents)
-        create_source_file("ignored_root_file.rb", <<~RUBY)
-          def method
-            unused = "x" and "y"
-
-            return false
-          end
-        RUBY
-        create_source_file("ignored_subdir/subdir_file.rb", <<~RUBY)
-          def method
-            unused = "x"
-
-            return false
-          end
-        RUBY
+        create_source_file("ignored_root_file.rb", bad_contents)
+        create_source_file("ignored_subdir/subdir_file.rb", bad_contents)
 
         run_engine(
           "include_paths" => %w[included_root_file.rb subdir/]
         )
 
         expect(issues).to_not include_check "Lint/UselessAssignment"
-        expect(issues).to_not include_check "Style/AndOr"
+        expect(issues).to_not include_check "Style/RedundantReturn"
       end
 
       it "ignores non-Ruby files even when passed in as include_paths" do
@@ -146,13 +118,7 @@ module CC::Engine
       end
 
       it "includes Ruby files even if they don't end with .rb" do
-        create_source_file("Rakefile", <<~RUBY)
-          def method
-            unused = "x"
-
-            return false
-          end
-        RUBY
+        create_source_file("Rakefile", bad_contents)
 
         run_engine("include_paths" => %w[Rakefile])
 
@@ -165,13 +131,14 @@ module CC::Engine
             # rubocop:disable Lint/UselessAssignment
             unused = "x"
 
-            return false
+            return false # rubocop:disable Style/RedundantReturn
           end
         RUBY
 
         run_engine
 
         expect(issues).to_not include_check "Lint/UselessAssignment"
+        expect(issues).to_not include_check "Style/RedundantReturn"
       end
     end
   end

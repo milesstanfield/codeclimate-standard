@@ -1,6 +1,16 @@
-This cop checks `eval` method usage. `eval` can receive source location
-metadata, that are filename and line number. The metadata is used by
-backtraces. This cop recommends to pass the metadata to `eval` method.
+This cop ensures that eval methods (`eval`, `instance_eval`, `class_eval`
+and `module_eval`) are given filename and line number values (`__FILE__`
+and `__LINE__`). This data is used to ensure that any errors raised
+within the evaluated code will be given the correct identification
+in a backtrace.
+
+The cop also checks that the line number given relative to `__LINE__` is
+correct.
+
+This cop will autocorrect incorrect or missing filename and line number
+values. However, if `eval` is called without a binding argument, the cop
+will not attempt to automatically add a binding, or add filename and
+line values.
 
 ### Example:
     # bad
@@ -26,3 +36,14 @@ backtraces. This cop recommends to pass the metadata to `eval` method.
       def do_something
       end
     RUBY
+
+This cop works only when a string literal is given as a code string.
+No offence is reported if a string variable is given as below:
+
+### Example:
+    # not checked
+    code = <<-RUBY
+      def do_something
+      end
+    RUBY
+    eval code

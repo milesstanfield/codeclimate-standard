@@ -1,6 +1,6 @@
-This cop is used to identify usages of
-`select.first`, `select.last`, `find_all.first`, `find_all.last`, `filter.first`, and `filter.last`
-and change them to use `detect` instead.
+This cop is used to identify usages of `first`, `last`, `[0]` or `[-1]`
+chained to `select`, `find_all` or `filter` and change them to use
+`detect` instead.
 
 ### Example:
     # bad
@@ -10,6 +10,8 @@ and change them to use `detect` instead.
     [].find_all { |item| true }.last
     [].filter { |item| true }.first
     [].filter { |item| true }.last
+    [].filter { |item| true }[0]
+    [].filter { |item| true }[-1]
 
     # good
     [].detect { |item| true }

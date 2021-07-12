@@ -5,6 +5,7 @@ Unary plus operator is faster than `String#dup`.
 NOTE: `String.new` (without operator) is not exactly the same as `+''`.
 These differ in encoding. `String.new.encoding` is always `ASCII-8BIT`.
 However, `(+'').encoding` is the same as script encoding(e.g. `UTF-8`).
+Therefore, auto-correction is unsafe.
 So, if you expect `ASCII-8BIT` encoding, disable this cop.
 
 ### Example:

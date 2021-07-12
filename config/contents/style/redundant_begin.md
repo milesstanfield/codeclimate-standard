@@ -23,7 +23,14 @@ Currently it checks for code like this:
     end
 
     # bad
-    # When using Ruby 2.5 or later.
+    begin
+      do_something
+    end
+
+    # good
+    do_something
+
+    # bad
     do_something do
       begin
         something
