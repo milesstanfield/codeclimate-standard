@@ -37,7 +37,7 @@ module CC
         cop_classes = RuboCop::Cop::Registry.all
         registry = RuboCop::Cop::Registry.new(cop_classes, builds_config.rubocop_options)
 
-        RuboCop::Cop::Team.new(registry, config_store, display_cop_names: false)
+        RuboCop::Cop::Team.mobilize(registry, config_store, display_cop_names: false)
       end
 
       def display_path
