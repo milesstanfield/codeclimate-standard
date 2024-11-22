@@ -30,7 +30,7 @@ module CC::Engine
       expect { config.validate }.to output(<<~TXT).to_stderr
         The `Style/TrailingComma` cop has been removed. Please use `Style/TrailingCommaInArguments`, `Style/TrailingCommaInArrayLiteral` and/or `Style/TrailingCommaInHashLiteral` instead.
         (obsolete configuration found in .rubocop.yml, please update it)
-        unrecognized cop Style/TrailingComma found in .rubocop.yml
+        unrecognized cop or department Style/TrailingComma found in .rubocop.yml
         Did you mean `Style/TrailingCommaInArguments`?
       TXT
     end
