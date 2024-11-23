@@ -1,6 +1,7 @@
 require "spec_helper"
 require "cc/engine/standard"
 require "tmpdir"
+require "ostruct"
 
 module CC::Engine
   describe Standard do
