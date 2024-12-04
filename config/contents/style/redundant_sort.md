@@ -1,4 +1,4 @@
-This cop is used to identify instances of sorting and then
+Identifies instances of sorting and then
 taking only the first or last element. The same behavior can
 be accomplished without a relatively expensive sort by using
 `Enumerable#min` instead of sorting and taking the first
@@ -6,6 +6,33 @@ element and `Enumerable#max` instead of sorting and taking the
 last element. Similarly, `Enumerable#min_by` and
 `Enumerable#max_by` can replace `Enumerable#sort_by` calls
 after which only the first or last element is used.
+
+@safety
+    This cop is unsafe, because `sort...last` and `max` may not return the
+    same element in all cases.
+
+    In an enumerable where there are multiple elements where ``a <=> b == 0``,
+    or where the transformation done by the `sort_by` block has the
+    same result, `sort.last` and `max` (or `sort_by.last` and `max_by`)
+    will return different elements. `sort.last` will return the last
+    element but `max` will return the first element.
+
+    For example:
+
+    [source,ruby]
+    ----
+      class MyString < String; end
+      strings = [MyString.new('test'), 'test']
+      strings.sort.last.class   #=> String
+      strings.max.class         #=> MyString
+    ----
+
+    [source,ruby]
+    ----
+      words = %w(dog horse mouse)
+      words.sort_by { |word| word.length }.last   #=> 'mouse'
+      words.max_by { |word| word.length }         #=> 'horse'
+    ----
 
 ### Example:
     # bad

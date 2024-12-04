@@ -1,5 +1,4 @@
-This cop is used to identify usages of `count` on an
-`Array` and `Hash` and change them to `size`.
+Identifies usages of `count` on an `Array` and `Hash` and change them to `size`.
 
 ### Example:
     # bad

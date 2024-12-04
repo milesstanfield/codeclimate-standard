@@ -1,4 +1,4 @@
-This cop checks for uses of literal strings converted to
+Checks for uses of literal strings converted to
 a symbol where a literal symbol could be used instead.
 
 There are two possible styles for this cop.
@@ -14,6 +14,7 @@ all keys to be quoted).
     'underscored_string'.to_sym
     :'underscored_symbol'
     'hyphenated-string'.to_sym
+    "string_#{interpolation}".to_sym
 
     # good
     :string
@@ -21,6 +22,7 @@ all keys to be quoted).
     :underscored_string
     :underscored_symbol
     :'hyphenated-string'
+    :"string_#{interpolation}"
 
 ### Example: EnforcedStyle: strict (default)
 

@@ -1,13 +1,13 @@
-This cop checks for the presence of `method_missing` without also
+Checks for the presence of `method_missing` without also
 defining `respond_to_missing?`.
 
 ### Example:
-    #bad
+    # bad
     def method_missing(name, *args)
       # ...
     end
 
-    #good
+    # good
     def respond_to_missing?(name, include_private)
       # ...
     end

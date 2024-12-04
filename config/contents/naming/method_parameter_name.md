@@ -1,4 +1,4 @@
-This cop checks method parameter names for how descriptive they
+Checks method parameter names for how descriptive they
 are. It is highly configurable.
 
 The `MinNameLength` config option takes an integer. It represents
@@ -21,7 +21,7 @@ restricted names that will always register an offense.
       num1 * num2
     end
 
-    # With `MinArgNameLength` set to number greater than 1
+    # With `MinNameLength` set to number greater than 1
     def baz(a, b, c)
       do_stuff(a, b, c)
     end

@@ -1,4 +1,4 @@
-This cop checks hash literal syntax.
+Checks hash literal syntax.
 
 It can enforce either the use of the class hash rocket syntax or
 the use of the newer Ruby 1.9 syntax (when applicable).
@@ -13,6 +13,19 @@ all symbols for keys
 * no_mixed_keys - simply checks for hashes with mixed syntaxes
 * ruby19_no_mixed_keys - forces use of ruby 1.9 syntax and forbids mixed
 syntax hashes
+
+This cop has `EnforcedShorthandSyntax` option.
+It can enforce either the use of the explicit hash value syntax or
+the use of Ruby 3.1's hash value shorthand syntax.
+
+The supported styles are:
+
+* always - forces use of the 3.1 syntax (e.g. {foo:})
+* never - forces use of explicit hash literal value
+* either - accepts both shorthand and explicit use of hash literal value
+* consistent - forces use of the 3.1 syntax only if all values can be omitted in the hash
+* either_consistent - accepts both shorthand and explicit use of hash literal value,
+                        but they must be consistent
 
 ### Example: EnforcedStyle: ruby19 (default)
     # bad
@@ -49,3 +62,64 @@ syntax hashes
     # good
     {a: 1, b: 2}
     {:c => 3, 'd' => 4}
+
+### Example: EnforcedShorthandSyntax: always (default)
+
+    # bad
+    {foo: foo, bar: bar}
+
+    # good
+    {foo:, bar:}
+
+### Example: EnforcedShorthandSyntax: never
+
+    # bad
+    {foo:, bar:}
+
+    # good
+    {foo: foo, bar: bar}
+
+### Example: EnforcedShorthandSyntax: either
+
+    # good
+    {foo: foo, bar: bar}
+
+    # good
+    {foo: foo, bar:}
+
+    # good
+    {foo:, bar:}
+
+### Example: EnforcedShorthandSyntax: consistent
+
+    # bad - `foo` and `bar` values can be omitted
+    {foo: foo, bar: bar}
+
+    # bad - `bar` value can be omitted
+    {foo:, bar: bar}
+
+    # bad - mixed syntaxes
+    {foo:, bar: baz}
+
+    # good
+    {foo:, bar:}
+
+    # good - can't omit `baz`
+    {foo: foo, bar: baz}
+
+### Example: EnforcedShorthandSyntax: either_consistent
+
+    # good - `foo` and `bar` values can be omitted, but they are consistent, so it's accepted
+    {foo: foo, bar: bar}
+
+    # bad - `bar` value can be omitted
+    {foo:, bar: bar}
+
+    # bad - mixed syntaxes
+    {foo:, bar: baz}
+
+    # good
+    {foo:, bar:}
+
+    # good - can't omit `baz`
+    {foo: foo, bar: baz}

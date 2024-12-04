@@ -1,4 +1,4 @@
-This cop checks the args passed to `fail` and `raise`. For exploded
+Checks the args passed to `fail` and `raise`. For exploded
 style (default), it recommends passing the exception class and message
 to `raise`, rather than construct an instance of the error. It will
 still allow passing just a message, or the construction of an error
@@ -10,6 +10,9 @@ passed multiple arguments.
 
 The exploded style has an `AllowedCompactTypes` configuration
 option that takes an Array of exception name Strings.
+
+@safety
+    This cop is unsafe because `raise Foo` calls `Foo.exception`, not `Foo.new`.
 
 ### Example: EnforcedStyle: exploded (default)
     # bad

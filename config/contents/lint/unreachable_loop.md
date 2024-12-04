@@ -1,12 +1,12 @@
-This cop checks for loops that will have at most one iteration.
+Checks for loops that will have at most one iteration.
 
 A loop that can never reach the second iteration is a possible error in the code.
 In rare cases where only one iteration (or at most one iteration) is intended behavior,
 the code should be refactored to use `if` conditionals.
 
-NOTE: Block methods that are used with `Enumerable`s are considered to be loops.
+NOTE: Block methods that are used with ``Enumerable``s are considered to be loops.
 
-`IgnoredPatterns` can be used to match against the block receiver in order to allow
+`AllowedPatterns` can be used to match against the block receiver in order to allow
 code that would otherwise be registered as an offense (eg. `times` used not in an
 `Enumerable` context).
 
@@ -74,7 +74,7 @@ code that would otherwise be registered as an offense (eg. `times` used not in a
     # bad
     2.times { raise ArgumentError }
 
-### Example: IgnoredPatterns: [/(exactly|at_least|at_most)\(\d+\)\.times/] (default)
+### Example: AllowedPatterns: ['(exactly|at_least|at_most)\(\d+\)\.times'] (default)
 
     # good
     exactly(2).times { raise StandardError }

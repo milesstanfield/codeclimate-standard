@@ -1,4 +1,4 @@
-This cop checks for memoized methods whose instance variable name
+Checks for memoized methods whose instance variable name
 does not match the method name. Applies to both regular methods
 (defined with `def`) and dynamic methods (defined with
 `define_method` or `define_singleton_method`).
@@ -8,6 +8,12 @@ directive. It can be configured to allow for memoized instance variables
 prefixed with an underscore. Prefixing ivars with an underscore is a
 convention that is used to implicitly indicate that an ivar should not
 be set or referenced outside of the memoization method.
+
+@safety
+    This cop relies on the pattern `@instance_var ||= ...`,
+    but this is sometimes used for other purposes than memoization
+    so this cop is considered unsafe. Also, its autocorrection is unsafe
+    because it may conflict with instance variable names already in use.
 
 ### Example: EnforcedStyleForLeadingUnderscores: disallowed (default)
     # bad
@@ -134,7 +140,3 @@ be set or referenced outside of the memoization method.
     define_method(:foo) do
       @_foo ||= calculate_expensive_thing
     end
-
-This cop relies on the pattern `@instance_var ||= ...`,
-but this is sometimes used for other purposes than memoization
-so this cop is considered unsafe.

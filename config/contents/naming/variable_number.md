@@ -1,27 +1,10 @@
-This cop makes sure that all numbered variables use the
+Makes sure that all numbered variables use the
 configured style, snake_case, normalcase, or non_integer,
 for their numbering.
 
 Additionally, `CheckMethodNames` and `CheckSymbols` configuration options
 can be used to specify whether method names and symbols should be checked.
 Both are enabled by default.
-
-### Example: EnforcedStyle: snake_case
-    # bad
-    :some_sym1
-    variable1 = 1
-
-    def some_method1; end
-
-    def some_method_1(arg1); end
-
-    # good
-    :some_sym_1
-    variable_1 = 1
-
-    def some_method_1; end
-
-    def some_method_1(arg_1); end
 
 ### Example: EnforcedStyle: normalcase (default)
     # bad
@@ -39,6 +22,23 @@ Both are enabled by default.
     def some_method1; end
 
     def some_method1(arg1); end
+
+### Example: EnforcedStyle: snake_case
+    # bad
+    :some_sym1
+    variable1 = 1
+
+    def some_method1; end
+
+    def some_method_1(arg1); end
+
+    # good
+    :some_sym_1
+    variable_1 = 1
+
+    def some_method_1; end
+
+    def some_method_1(arg_1); end
 
 ### Example: EnforcedStyle: non_integer
     # bad
@@ -90,3 +90,7 @@ Both are enabled by default.
 ### Example: AllowedIdentifiers: [capture3]
     # good
     expect(Open3).to receive(:capture3)
+
+### Example: AllowedPatterns: ['_v\d+\z']
+    # good
+    :some_sym_v1

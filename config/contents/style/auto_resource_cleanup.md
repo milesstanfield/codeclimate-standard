@@ -1,4 +1,4 @@
-This cop checks for cases when you could use a block
+Checks for cases when you could use a block
 accepting version of a method that does automatic
 resource cleanup.
 
@@ -9,5 +9,13 @@ resource cleanup.
 
     # good
     File.open('file') do |f|
+      # ...
+    end
+
+    # bad
+    f = Tempfile.open('temp')
+
+    # good
+    Tempfile.open('temp') do |f|
       # ...
     end

@@ -1,10 +1,10 @@
-This cop ensures that eval methods (`eval`, `instance_eval`, `class_eval`
-and `module_eval`) are given filename and line number values (`__FILE__`
-and `__LINE__`). This data is used to ensure that any errors raised
+Ensures that eval methods (`eval`, `instance_eval`, `class_eval`
+and `module_eval`) are given filename and line number values (`\_\_FILE\_\_`
+and `\_\_LINE\_\_`). This data is used to ensure that any errors raised
 within the evaluated code will be given the correct identification
 in a backtrace.
 
-The cop also checks that the line number given relative to `__LINE__` is
+The cop also checks that the line number given relative to `\_\_LINE\_\_` is
 correct.
 
 This cop will autocorrect incorrect or missing filename and line number
@@ -38,7 +38,7 @@ line values.
     RUBY
 
 This cop works only when a string literal is given as a code string.
-No offence is reported if a string variable is given as below:
+No offense is reported if a string variable is given as below:
 
 ### Example:
     # not checked

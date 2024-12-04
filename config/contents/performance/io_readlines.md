@@ -1,4 +1,4 @@
-This cop identifies places where inefficient `readlines` method
+Identifies places where inefficient `readlines` method
 can be replaced by `each_line` to avoid fully loading file content into memory.
 
 ### Example:

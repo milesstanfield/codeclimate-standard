@@ -1,16 +1,17 @@
-This cop identifies unnecessary use of a regex where
-`String#include?` would suffice.
+Identifies unnecessary use of a regex where `String#include?` would suffice.
 
-This cop's offenses are not safe to auto-correct if a receiver is nil.
+@safety
+    This cop's offenses are not safe to autocorrect if a receiver is nil or a Symbol.
 
 ### Example:
     # bad
-    'abc'.match?(/ab/)
-    /ab/.match?('abc')
-    'abc' =~ /ab/
-    /ab/ =~ 'abc'
-    'abc'.match(/ab/)
-    /ab/.match('abc')
+    str.match?(/ab/)
+    /ab/.match?(str)
+    str =~ /ab/
+    /ab/ =~ str
+    str.match(/ab/)
+    /ab/.match(str)
+    /ab/ === str
 
     # good
-    'abc'.include?('ab')
+    str.include?('ab')

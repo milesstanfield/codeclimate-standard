@@ -1,7 +1,16 @@
-This cop checks for use of `extend self` or `module_function` in a
-module.
+Checks for use of `extend self` or `module_function` in a module.
 
-Supported styles are: module_function, extend_self, forbidden.
+Supported styles are: `module_function` (default), `extend_self` and `forbidden`.
+
+A couple of things to keep in mind:
+
+- `forbidden` style prohibits the usage of both styles
+- in default mode (`module_function`), the cop won't be activated when the module
+    contains any private methods
+
+@safety
+    Autocorrection is unsafe (and is disabled by default) because `extend self`
+    and `module_function` do not behave exactly the same.
 
 ### Example: EnforcedStyle: module_function (default)
     # bad
@@ -16,16 +25,19 @@ Supported styles are: module_function, extend_self, forbidden.
       # ...
     end
 
-In case there are private methods, the cop won't be activated.
-Otherwise, it forces to change the flow of the default code.
-
-### Example: EnforcedStyle: module_function (default)
     # good
     module Test
       extend self
       # ...
       private
       # ...
+    end
+
+    # good
+    module Test
+      class << self
+        # ...
+      end
     end
 
 ### Example: EnforcedStyle: extend_self
@@ -41,7 +53,12 @@ Otherwise, it forces to change the flow of the default code.
       # ...
     end
 
-The option `forbidden` prohibits the usage of both styles.
+    # good
+    module Test
+      class << self
+        # ...
+      end
+    end
 
 ### Example: EnforcedStyle: forbidden
     # bad
@@ -64,5 +81,9 @@ The option `forbidden` prohibits the usage of both styles.
       # ...
     end
 
-These offenses are not safe to auto-correct since there are different
-implications to each approach.
+    # good
+    module Test
+      class << self
+        # ...
+      end
+    end

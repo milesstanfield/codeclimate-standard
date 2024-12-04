@@ -2,13 +2,15 @@ In Ruby 2.5, `String#delete_prefix` has been added.
 
 This cop identifies places where `gsub(/\Aprefix/, '')` and `sub(/\Aprefix/, '')`
 can be replaced by `delete_prefix('prefix')`.
-It is marked as unsafe by default because `Pathname` has `sub` but not `delete_prefix`.
 
 This cop has `SafeMultiline` configuration option that `true` by default because
 `^prefix` is unsafe as it will behave incompatible with `delete_prefix`
 for receiver is multiline string.
 
 The `delete_prefix('prefix')` method is faster than `gsub(/\Aprefix/, '')`.
+
+@safety
+    This cop is unsafe because `Pathname` has `sub` but not `delete_prefix`.
 
 ### Example:
 

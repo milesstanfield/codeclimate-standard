@@ -1,4 +1,4 @@
-This cop checks the length of lines in the source code.
+Checks the length of lines in the source code.
 The maximum length is configurable.
 The tab size is configured in the `IndentationWidth`
 of the `Layout/IndentationStyle` cop.
@@ -15,6 +15,7 @@ are recommended to further format the broken lines.
 (Many of these are enabled by default.)
 
 * ArgumentAlignment
+* ArrayAlignment
 * BlockAlignment
 * BlockDelimiters
 * BlockEndNewline
@@ -30,6 +31,7 @@ are recommended to further format the broken lines.
 * MultilineHashBraceLayout
 * MultilineHashKeyLineBreaks
 * MultilineMethodArgumentLineBreaks
+* MultilineMethodParameterLineBreaks
 * ParameterAlignment
 
 Together, these cops will pretty print hashes, arrays,

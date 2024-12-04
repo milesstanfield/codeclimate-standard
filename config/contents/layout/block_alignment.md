@@ -1,4 +1,4 @@
-This cop checks whether the end keywords are aligned properly for do
+Checks whether the end keywords are aligned properly for do
 end blocks.
 
 Three modes are supported through the `EnforcedStyleAlignWith`
@@ -17,23 +17,24 @@ location. The autofixer will default to `start_of_line`.
     # bad
 
     foo.bar
-       .each do
-         baz
-           end
+      .each do
+        baz
+          end
 
     # good
 
-    variable = lambda do |i|
-      i
+    foo.bar
+      .each do
+        baz
     end
 
 ### Example: EnforcedStyleAlignWith: start_of_block
     # bad
 
     foo.bar
-       .each do
-         baz
-           end
+      .each do
+        baz
+          end
 
     # good
 
@@ -46,13 +47,13 @@ location. The autofixer will default to `start_of_line`.
     # bad
 
     foo.bar
-       .each do
-         baz
-           end
+      .each do
+        baz
+          end
 
     # good
 
     foo.bar
       .each do
-         baz
+        baz
     end

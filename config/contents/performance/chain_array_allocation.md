@@ -1,15 +1,13 @@
-This cop is used to identify usages of
+Identifies usages of `array.compact.flatten.map { |x| x.downcase }`.
+Each of these methods (`compact`, `flatten`, `map`) will generate a new intermediate array
+that is promptly thrown away. Instead it is faster to mutate when we know it's safe.
+
 ### Example:
     # bad
     array = ["a", "b", "c"]
     array.compact.flatten.map { |x| x.downcase }
 
-Each of these methods (`compact`, `flatten`, `map`) will generate a
-new intermediate array that is promptly thrown away. Instead it is
-faster to mutate when we know it's safe.
-
-### Example:
-    # good.
+    # good
     array = ["a", "b", "c"]
     array.compact!
     array.flatten!

@@ -1,10 +1,10 @@
-This cop identifies places where `Hash#merge!` can be replaced by
-`Hash#[]=`.
+Identifies places where `Hash#merge!` can be replaced by `Hash#[]=`.
 You can set the maximum number of key-value pairs to consider
 an offense with `MaxKeyValuePairs`.
 
-This cop is marked as unsafe because RuboCop cannot determine if the
-receiver of `merge!` is actually a hash or not.
+@safety
+    This cop is unsafe because RuboCop cannot determine if the
+    receiver of `merge!` is actually a hash or not.
 
 ### Example:
     # bad

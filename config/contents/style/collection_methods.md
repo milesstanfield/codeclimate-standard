@@ -1,9 +1,5 @@
-This cop enforces the use of consistent method names
+Enforces the use of consistent method names
 from the Enumerable module.
-
-Unfortunately we cannot actually know if a method is from
-Enumerable or not (static analysis limitation), so this cop
-can yield some false positives.
 
 You can customize the mapping from undesired method to desired method.
 
@@ -13,12 +9,18 @@ e.g. to use `detect` over `find`:
       PreferredMethods:
         find: detect
 
-The default mapping for `PreferredMethods` behaves as follows.
+@safety
+    This cop is unsafe because it finds methods by name, without actually
+    being able to determine if the receiver is an Enumerable or not, so
+    this cop may register false positives.
 
 ### Example:
+    # These examples are based on the default mapping for `PreferredMethods`.
+
     # bad
     items.collect
     items.collect!
+    items.collect_concat
     items.inject
     items.detect
     items.find_all
@@ -27,6 +29,7 @@ The default mapping for `PreferredMethods` behaves as follows.
     # good
     items.map
     items.map!
+    items.flat_map
     items.reduce
     items.find
     items.select

@@ -1,4 +1,4 @@
-This cop checks for endless methods.
+Checks for endless methods.
 
 It can enforce either the use of endless methods definitions
 for single-lined method bodies, or disallow endless methods.
@@ -34,7 +34,7 @@ corrected to a multi-line definition.
 
 ### Example: EnforcedStyle: disallow
     # bad
-    def my_method; x end
+    def my_method() = x
 
     # bad
     def my_method() = x.foo

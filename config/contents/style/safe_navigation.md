@@ -1,17 +1,31 @@
-This cop transforms usages of a method call safeguarded by a non `nil`
+Transforms usages of a method call safeguarded by a non `nil`
 check for the variable whose method is being called to
 safe navigation (`&.`). If there is a method chain, all of the methods
 in the chain need to be checked for safety, and all of the methods will
-need to be changed to use safe navigation. We have limited the cop to
-not register an offense for method chains that exceed 2 methods.
+need to be changed to use safe navigation.
 
-Configuration option: ConvertCodeThatCanStartToReturnNil
-The default for this is `false`. When configured to `true`, this will
+The default for `ConvertCodeThatCanStartToReturnNil` is `false`.
+When configured to `true`, this will
 check for code in the format `!foo.nil? && foo.bar`. As it is written,
 the return of this code is limited to `false` and whatever the return
 of the method is. If this is converted to safe navigation,
 `foo&.bar` can start returning `nil` as well as what the method
 returns.
+
+The default for `MaxChainLength` is `2`
+We have limited the cop to not register an offense for method chains
+that exceed this option is set.
+
+@safety
+    Autocorrection is unsafe because if a value is `false`, the resulting
+    code will have different behavior or raise an error.
+
+    [source,ruby]
+    ----
+    x = false
+    x && x.foo  # return false
+    x&.foo      # raises NoMethodError
+    ----
 
 ### Example:
     # bad
@@ -30,6 +44,11 @@ returns.
     foo && foo.bar(param1, param2)
     foo && foo.bar { |e| e.something }
     foo && foo.bar(param) { |e| e.something }
+
+    foo ? foo.bar : nil
+    foo.nil? ? nil : foo.bar
+    !foo.nil? ? foo.bar : nil
+    !foo ? nil : foo.bar
 
     # good
     foo&.bar

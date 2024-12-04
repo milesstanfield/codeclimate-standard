@@ -1,5 +1,13 @@
-Sometimes using dig method ends up with just a single
-argument. In such cases, dig should be replaced with [].
+Sometimes using `dig` method ends up with just a single
+argument. In such cases, dig should be replaced with `[]`.
+
+Since replacing `hash&.dig(:key)` with `hash[:key]` could potentially lead to error,
+calls to the `dig` method using safe navigation will be ignored.
+
+@safety
+    This cop is unsafe because it cannot be guaranteed that the receiver
+    is an `Enumerable` or does not have a nonstandard implementation
+    of `dig`.
 
 ### Example:
     # bad

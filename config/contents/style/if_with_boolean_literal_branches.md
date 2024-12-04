@@ -1,8 +1,29 @@
-This cop checks for redundant `if` with boolean literal branches.
+Checks for redundant `if` with boolean literal branches.
 It checks only conditions to return boolean value (`true` or `false`) for safe detection.
-The conditions to be checked are comparison methods, predicate methods, and double negative.
-However, auto-correction is unsafe because there is no guarantee that all predicate methods
-will return boolean value. Those methods can be allowed with `AllowedMethods` config.
+The conditions to be checked are comparison methods, predicate methods, and
+double negation (!!).
+`nonzero?` method is allowed by default.
+These are customizable with `AllowedMethods` option.
+
+This cop targets only `if`s with a single `elsif` or `else` branch. The following
+code will be allowed, because it has two `elsif` branches:
+
+[source,ruby]
+----
+if foo
+    true
+elsif bar > baz
+    true
+elsif qux > quux # Single `elsif` is warned, but two or more `elsif`s are not.
+    true
+else
+    false
+end
+----
+
+@safety
+    Autocorrection is unsafe because there is no guarantee that all predicate methods
+    will return a boolean value. Those methods can be allowed with `AllowedMethods` config.
 
 ### Example:
     # bad
@@ -18,6 +39,17 @@ will return boolean value. Those methods can be allowed with `AllowedMethods` co
     # good
     foo == bar
 
-### Example: AllowedMethods: ['nonzero?']
+### Example:
+    # bad
+    if foo.do_something?
+      true
+    else
+      false
+    end
+
+    # good (but potentially an unsafe correction)
+    foo.do_something?
+
+### Example: AllowedMethods: ['nonzero?'] (default)
     # good
     num.nonzero? ? true : false

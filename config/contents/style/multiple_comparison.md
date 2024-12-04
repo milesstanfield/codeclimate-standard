@@ -1,4 +1,4 @@
-This cop checks against comparing a variable with multiple items, where
+Checks against comparing a variable with multiple items, where
 `Array#include?`, `Set#include?` or a `case` could be used instead
 to avoid code repetition.
 It accepts comparisons of multiple method calls to avoid unnecessary method calls
@@ -35,3 +35,11 @@ by default. It can be configured by `AllowMethodComparison` option.
 
     # good
     foo if [b.lightweight, b.heavyweight].include?(a)
+
+### Example: ComparisonsThreshold: 2 (default)
+    # bad
+    foo if a == 'a' || a == 'b'
+
+### Example: ComparisonsThreshold: 3
+    # good
+    foo if a == 'a' || a == 'b'

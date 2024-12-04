@@ -1,4 +1,8 @@
-This cop checks for duplicate `require`s and `require_relative`s.
+Checks for duplicate ``require``s and ``require_relative``s.
+
+@safety
+    This cop's autocorrection is unsafe because it may break the dependency order
+    of `require`.
 
 ### Example:
     # bad

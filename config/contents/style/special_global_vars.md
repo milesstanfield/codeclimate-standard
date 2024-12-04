@@ -1,8 +1,16 @@
+Looks for uses of Perl-style global variables.
+Correcting to global variables in the 'English' library
+will add a require statement to the top of the file if
+enabled by RequireEnglish config.
 
-This cop looks for uses of Perl-style global variables.
+@safety
+    Autocorrection is marked as unsafe because if `RequireEnglish` is not
+    true, replacing perl-style variables with english variables will break.
 
 ### Example: EnforcedStyle: use_english_names (default)
     # good
+    require 'English' # or this could be in another file.
+
     puts $LOAD_PATH
     puts $LOADED_FEATURES
     puts $PROGRAM_NAME
@@ -24,6 +32,33 @@ This cop looks for uses of Perl-style global variables.
 
 ### Example: EnforcedStyle: use_perl_names
     # good
+    puts $:
+    puts $"
+    puts $0
+    puts $!
+    puts $@
+    puts $;
+    puts $,
+    puts $/
+    puts $\
+    puts $.
+    puts $_
+    puts $>
+    puts $<
+    puts $$
+    puts $?
+    puts $~
+    puts $=
+    puts $*
+
+### Example: EnforcedStyle: use_builtin_english_names
+
+    # good
+    # Like `use_perl_names` but allows builtin global vars.
+    puts $LOAD_PATH
+    puts $LOADED_FEATURES
+    puts $PROGRAM_NAME
+    puts ARGV
     puts $:
     puts $"
     puts $0

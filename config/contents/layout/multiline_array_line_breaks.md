@@ -1,4 +1,4 @@
-This cop ensures that each item in a multi-line array
+Ensures that each item in a multi-line array
 starts on a separate line.
 
 ### Example:
@@ -15,3 +15,26 @@ starts on a separate line.
       b,
       c
     ]
+
+    # good
+    [
+      a,
+      b,
+      foo(
+        bar
+      )
+    ]
+
+### Example: AllowMultilineFinalElement: false (default)
+
+    # bad
+    [a, b, foo(
+      bar
+    )]
+
+### Example: AllowMultilineFinalElement: true
+
+    # good
+    [a, b, foo(
+      bar
+    )]

@@ -1,10 +1,10 @@
-This cop checks for the use of the send method.
+Checks for the use of the send method.
 
 ### Example:
     # bad
-    Foo.send(:bar)
-    quuz.send(:fred)
+    Foo.send(bar)
+    quuz.send(fred)
 
     # good
-    Foo.__send__(:bar)
-    quuz.public_send(:fred)
+    Foo.__send__(bar)
+    quuz.public_send(fred)

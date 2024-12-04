@@ -1,6 +1,26 @@
-This cop can either enforce or forbid Yoda conditions,
+Enforces or forbids Yoda conditions,
 i.e. comparison operations where the order of expression is reversed.
 eg. `5 == x`
+
+@safety
+    This cop is unsafe because comparison operators can be defined
+    differently on different classes, and are not guaranteed to
+    have the same result if reversed.
+
+    For example:
+
+    [source,ruby]
+    ----
+    class MyKlass
+      def ==(other)
+        true
+      end
+    end
+
+    obj = MyKlass.new
+    obj == 'string'   #=> true
+    'string' == obj   #=> false
+    ----
 
 ### Example: EnforcedStyle: forbid_for_all_comparison_operators (default)
     # bad
@@ -8,12 +28,14 @@ eg. `5 == x`
     "bar" != foo
     42 >= foo
     10 < bar
+    99 == CONST
 
     # good
     foo == 99
     foo == "bar"
     foo <= 42
     bar > 10
+    CONST == 99
     "#{interpolation}" == foo
     /#{interpolation}/ == foo
 

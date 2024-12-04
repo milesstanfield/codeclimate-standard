@@ -1,4 +1,4 @@
-This cop is used to identify usages of `map { ... }.flatten` and
+Identifies usages of `map { ... }.flatten` and
 change them to use `flat_map { ... }` instead.
 
 ### Example:

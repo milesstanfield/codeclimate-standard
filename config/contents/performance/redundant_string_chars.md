@@ -1,9 +1,10 @@
-This cop checks for redundant `String#chars`.
+Checks for redundant `String#chars`.
 
 ### Example:
     # bad
     str.chars[0..2]
     str.chars.slice(0..2)
+    str.chars.last
 
     # good
     str[0..2].chars
@@ -15,6 +16,7 @@ This cop checks for redundant `String#chars`.
     # good
     str[0]
     str[0...2].chars
+    str[-1]
 
     # bad
     str.chars.take(2)
@@ -28,8 +30,7 @@ This cop checks for redundant `String#chars`.
     str.size
     str.empty?
 
-    # For example, if the receiver is a blank string, it will be incompatible.
+    # For example, if the receiver is an empty string, it will be incompatible.
     # If a negative value is specified for the receiver, `nil` is returned.
-    str.chars.last    # Incompatible with `str[-1]`.
     str.chars.last(2) # Incompatible with `str[-2..-1].chars`.
     str.chars.drop(2) # Incompatible with `str[2..-1].chars`.

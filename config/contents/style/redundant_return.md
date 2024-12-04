@@ -1,4 +1,4 @@
-This cop checks for redundant `return` expressions.
+Checks for redundant `return` expressions.
 
 ### Example:
     # These bad cases should be extended to handle methods whose body is
@@ -17,9 +17,14 @@ This cop checks for redundant `return` expressions.
       return something
     end
 
-    # good
+    # bad
     def test
       return something if something_else
+    end
+
+    # good
+    def test
+      something if something_else
     end
 
     # good

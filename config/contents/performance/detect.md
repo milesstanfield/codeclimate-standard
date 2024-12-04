@@ -1,6 +1,11 @@
-This cop is used to identify usages of `first`, `last`, `[0]` or `[-1]`
+Identifies usages of `first`, `last`, `[0]` or `[-1]`
 chained to `select`, `find_all` or `filter` and change them to use
 `detect` instead.
+
+@safety
+    This cop is unsafe because it assumes that the receiver is an
+    `Array` or equivalent, but can't reliably detect it. For example,
+    if the receiver is a `Hash`, it may report a false positive.
 
 ### Example:
     # bad
@@ -16,8 +21,3 @@ chained to `select`, `find_all` or `filter` and change them to use
     # good
     [].detect { |item| true }
     [].reverse.detect { |item| true }
-
-`ActiveRecord` compatibility:
-`ActiveRecord` does not implement a `detect` method and `find` has its
-own meaning. Correcting ActiveRecord methods with this cop should be
-considered unsafe.

@@ -1,5 +1,9 @@
-This cop checks for optional arguments to methods
+Checks for optional arguments to methods
 that do not come at the end of the argument list.
+
+@safety
+    This cop is unsafe because changing a method signature will
+    implicitly change behavior.
 
 ### Example:
     # bad

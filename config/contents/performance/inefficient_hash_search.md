@@ -1,4 +1,4 @@
-This cop checks for inefficient searching of keys and values within
+Checks for inefficient searching of keys and values within
 hashes.
 
 `Hash#keys.include?` is less efficient than `Hash#key?` because
@@ -9,6 +9,9 @@ performs a faster O(1) search for the key.
 `Hash#values.include?` is less efficient than `Hash#value?`. While they
 both perform an O(n) search through all of the values, calling `values`
 allocates a new array while using `value?` does not.
+
+@safety
+    This cop is unsafe because it can't tell whether the receiver is a hash object.
 
 ### Example:
     # bad
