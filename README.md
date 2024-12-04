@@ -11,7 +11,12 @@ You can find some basic setup instructions and links to the Standard OSS project
 ### Installation
 
 1. If you haven't already, [install the Code Climate CLI](https://github.com/codeclimate/codeclimate).
-2. Add the engine and enable it in your `.codeclimate.yml` file.
+2. Enable the engine by adding the following under `plugins` in your `.codeclimate.yaml`:
+    ```yaml
+    plugins:
+      standard:
+        enabled: true
+    ```
 3. You're ready to analyze! Browse into your project's folder and run `codeclimate analyze`.
 
 ### Need help?
